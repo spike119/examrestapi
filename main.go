@@ -133,8 +133,7 @@ func NewHandler() http.Handler {
 	lastID = 0
 	mux := mux.NewRouter()
 	fs := http.FileServer(http.Dir("./public"))
-	mux.Handle("/", fs)
-	mux.Handle("/myscript.js", fs)
+	mux.Handle("/", http.StripPrefix("/", fs))
 	mux.HandleFunc("/users", usersHandler).Methods("GET")
 	mux.HandleFunc("/users", createUserHandler).Methods("POST")
 	mux.HandleFunc("/users", updateUserHandler).Methods("PUT")
